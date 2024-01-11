@@ -1,3 +1,4 @@
+import EditForm from "@/components/EditForm";
 import { db } from "@/db";
 import { notFound } from "next/navigation";
 
@@ -12,7 +13,12 @@ const SnippetEditPage = async (props: Props) => {
 
   if (!snippet) return notFound();
 
-  return <div>{snippet.title}</div>;
+  return (
+    <div>
+      {snippet.title}
+      <EditForm snippet={snippet} />
+    </div>
+  );
 };
 
 export default SnippetEditPage;
