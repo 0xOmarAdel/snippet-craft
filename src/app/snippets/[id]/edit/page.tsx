@@ -1,11 +1,18 @@
+import { db } from "@/db";
+import { notFound } from "next/navigation";
+
 type Props = {
   params: { id: string };
 };
 
-const SnippetEditPage = (props: Props) => {
+const SnippetEditPage = async (props: Props) => {
   const id = parseInt(props.params.id);
 
-  return <div>{id}</div>;
+  const snippet = await db.snippet.findFirst({ where: { id } });
+
+  if (!snippet) return notFound();
+
+  return <div>{snippet.title}</div>;
 };
 
 export default SnippetEditPage;
