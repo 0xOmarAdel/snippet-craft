@@ -9,5 +9,5 @@ export const editSnippet = async (id: number, code: string) => {
     data: { code },
   });
 
-  redirect(`snippets/${id}`);
+  redirect(`/snippets/${id}`);
 };
