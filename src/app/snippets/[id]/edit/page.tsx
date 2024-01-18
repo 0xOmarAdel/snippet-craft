@@ -1,15 +1,13 @@
 import EditForm from "@/components/EditForm";
-import { db } from "@/db";
 import { notFound } from "next/navigation";
+import { getSnippet } from "@/lib/snippets";
 
 type Props = {
   params: { id: string };
 };
 
 const SnippetEditPage = async (props: Props) => {
-  const id = parseInt(props.params.id);
-
-  const snippet = await db.snippet.findFirst({ where: { id } });
+  const snippet = getSnippet(props.params.id);
 
   if (!snippet) return notFound();
 

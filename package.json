@@ -12,6 +12,7 @@
   "dependencies": {
     "@monaco-editor/react": "^4.6.0",
     "@prisma/client": "^5.7.1",
+    "better-sqlite3": "^9.3.0",
     "next": "14.0.4",
     "prisma": "^5.7.1",
     "react": "^18",

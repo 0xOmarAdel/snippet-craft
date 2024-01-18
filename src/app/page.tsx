@@ -1,8 +1,14 @@
 import Link from "next/link";
-import { db } from "@/db";
+import { getSnippets } from "../lib/snippets";
 
-export default async function Home() {
-  const snippets = await db.snippet.findMany();
+type Snippet = {
+  id: number;
+  title: string;
+  code: string;
+};
+
+export default function Home() {
+  const snippets = getSnippets();
 
   return (
     <div>
@@ -13,7 +19,7 @@ export default async function Home() {
         </Link>
       </div>
       <div className="flex flex-col gap-2">
-        {snippets.map((snippet) => (
+        {snippets.map((snippet: Snippet) => (
           <Link
             key={snippet.id}
             href={`/snippets/${snippet.id}`}

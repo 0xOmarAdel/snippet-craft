@@ -1,7 +1,6 @@
 import { notFound } from "next/navigation";
-import { db } from "@/db";
 import Link from "next/link";
-import * as actions from "@/actions";
+import { getSnippet } from "@/lib/snippets";
 
 interface SnippetShowPageProps {
   params: {
@@ -10,15 +9,11 @@ interface SnippetShowPageProps {
 }
 
 export default async function SnippetPage(props: SnippetShowPageProps) {
-  const snippet = await db.snippet.findFirst({
-    where: { id: parseInt(props.params.id) },
-  });
+  const snippet = getSnippet(props.params.id);
 
   if (!snippet) {
     return notFound();
   }
-
-  const deleteHandler = actions.deleteSnippet.bind(null, snippet.id);
 
   return (
     <div>
@@ -31,11 +26,9 @@ export default async function SnippetPage(props: SnippetShowPageProps) {
           >
             Edit
           </Link>
-          <form action={deleteHandler}>
-            <button className="p-2 border rounded" type="submit">
-              Delete
-            </button>
-          </form>
+          <button className="p-2 border rounded" type="submit">
+            Delete
+          </button>
         </div>
       </div>
       <pre className="p-3 border rounded bg-gray-200 border-gray-200">
@@ -44,13 +37,3 @@ export default async function SnippetPage(props: SnippetShowPageProps) {
     </div>
   );
 }
-
-export const generateStaticParams = async () => {
-  const snippets = await db.snippet.findMany();
-
-  return snippets.map((snippet) => {
-    return {
-      id: snippet.id.toString(),
-    };
-  });
-};

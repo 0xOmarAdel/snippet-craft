@@ -1,10 +1,10 @@
 "use server";
 
-import { db } from "@/db";
+import { saveSnippet } from "@/lib/snippets";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export const createSnippet = async (
+export const createSnippet = (
   formState: { message: string },
   fromData: FormData
 ) => {
@@ -20,12 +20,7 @@ export const createSnippet = async (
   }
 
   try {
-    const snippet = await db.snippet.create({
-      data: {
-        title,
-        code,
-      },
-    });
+    const snippet = saveSnippet(title, code);
 
     console.log(snippet);
   } catch (error) {
@@ -36,7 +31,7 @@ export const createSnippet = async (
   redirect("/");
 };
 
-export const editSnippet = async (id: number, code: string) => {
+/* export const editSnippet = async (id: number, code: string) => {
   await db.snippet.update({
     where: { id },
     data: { code },
@@ -51,4 +46,4 @@ export const deleteSnippet = async (id: number) => {
 
   revalidatePath("/");
   redirect("/");
-};
+}; */

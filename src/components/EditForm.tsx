@@ -3,7 +3,6 @@
 import type { Snippet } from "@prisma/client";
 import Editor from "@monaco-editor/react";
 import { useState } from "react";
-import * as actions from "@/actions";
 
 type Props = {
   snippet: Snippet;
@@ -12,11 +11,9 @@ type Props = {
 const EditForm = ({ snippet }: Props) => {
   const [code, setCode] = useState<string | undefined>(snippet.code);
 
-  /* const submitHandler = async () => {
-    await actions.editSnippet(snippet.id, code);
-  }; */
-
-  const submitHandler = actions.editSnippet.bind(null, snippet.id, code!);
+  const submitHandler = () => {
+    console.log(code)
+  }
 
   return (
     <div>
